@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Forum.WebApp.Models.PostVM>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        <i>Tylko zalogowany użytkownik może dodać, zmodyfikować lub usunąć swój post</i>
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+                    @Html.ActionLink("Comments", "", "Comment", new { id = item.Id })
+                    @{
+                        if (User.Identity.Name == item.Author || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) @:
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
