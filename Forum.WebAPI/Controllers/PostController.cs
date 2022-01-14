@@ -55,5 +55,12 @@ namespace Forum.WebAPI.Controllers
             await _postService.DelAsync(id);
             return NoContent();
         }
+
+        [HttpGet("/postlist")]
+        public async Task<IActionResult> GetPostList()
+        {
+            var posts = await _postService.GetPostList();
+            return Json(posts);
+        }
     }
 }

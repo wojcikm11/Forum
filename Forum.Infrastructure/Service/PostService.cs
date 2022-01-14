@@ -48,6 +48,20 @@ namespace Forum.Infrastructure.Service
             await _postRepository.UpdateAsync(Map(p, id));
         }
 
+        public async Task<PostListDTO> GetPostList()
+        {
+            var posts = await _postRepository.BrowseAllAsync();
+            var postsDTO = posts.Select(p => Map(p));
+            int recentPosts = getRecentPosts(postsDTO);
+            return await Task.FromResult(new PostListDTO(){ Posts = postsDTO.ToList(), RecentPosts = recentPosts });
+        }
+
+        private int getRecentPosts(IEnumerable<PostDTO> postsDTO)
+        {
+            int days = 7;
+            return postsDTO.Where(post => (DateTime.Now - post.DatePosted).TotalDays <= days).Count();
+        }
+
         private Post Map(CreatePost p)
         {
             return new Post()

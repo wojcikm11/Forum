@@ -15,5 +15,6 @@ namespace Forum.Infrastructure.Service
         Task DelAsync(int id);
         Task UpdateAsync(int id, UpdatePost p);
         Task AddAsync(CreatePost p);
+        Task<PostListDTO> GetPostList();
     }
 }

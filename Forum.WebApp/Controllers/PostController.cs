@@ -43,10 +43,10 @@ namespace Forum.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            string _restpath = GetHostUrl().Content + CN();
+            string _restpath = GetHostUrl().Content + CN() + "list";
             var tokenString = GenerateJSONWebToken();
 
-            List<PostVM> postsList = new List<PostVM>();
+            PostListVM postsList = new PostListVM();
 
             using (var httpClient = new HttpClient())
             {
@@ -54,7 +54,7 @@ namespace Forum.WebApp.Controllers
                 using (var response = await httpClient.GetAsync(_restpath))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    postsList = JsonConvert.DeserializeObject<List<PostVM>>(apiResponse);
+                    postsList = JsonConvert.DeserializeObject<PostListVM>(apiResponse);
                 }
             }
 
