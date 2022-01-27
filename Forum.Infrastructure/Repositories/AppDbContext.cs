@@ -15,6 +15,11 @@ namespace Forum.Infrastructure.Repositories
 
         }
 
+        public AppDbContext()
+        {
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,17 +36,6 @@ namespace Forum.Infrastructure.Repositories
             modelBuilder.Entity<Post>()
                 .HasOne(a => a.Author)
                 .WithMany(b => b.UserPosts);
-
-            //modelBuilder.Entity<Comment>()
-            //    .HasKey(bc => new { bc.Post.Id, bc.User.Id });
-            //modelBuilder.Entity<Comment>()
-            //    .HasOne(bc => bc.User)
-            //    .WithMany(b => b.UserComments)
-            //    .HasForeignKey(bc => bc.User.Id);
-            //modelBuilder.Entity<Comment>()
-            //    .HasOne(bc => bc.Post)
-            //    .WithMany(c => c.Comments)
-            //    .HasForeignKey(bc => bc.Post.Id);
         }
 
         public DbSet<Comment> Comment { get; set; }

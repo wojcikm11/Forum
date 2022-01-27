@@ -44,13 +44,9 @@ namespace Forum.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             string _restpath = GetHostUrl().Content + CN() + "list";
-            var tokenString = GenerateJSONWebToken();
-
             PostListVM postsList = new PostListVM();
-
             using (var httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenString);
                 using (var response = await httpClient.GetAsync(_restpath))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
